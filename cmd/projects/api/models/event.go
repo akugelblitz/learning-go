@@ -9,11 +9,11 @@ import (
 
 type Event struct {
 	ID          int
-	Name        string
-	Description string
-	Location    string
-	DateTime    time.Time
-	UserId      []string
+  Name        string `binding:"required"`
+	Description string `binding:"required"`
+	Location    string `binding:"required"`
+	DateTime    time.Time `binding:"required"`
+	UserId      []int
 }
 
 var (
@@ -42,12 +42,13 @@ func New(name string, description string, location string, datetime time.Time) (
 		Location:    location,
 		DateTime:    datetime,
 	}
-
-	events = append(events, event)
-
 	return event, nil
 }
 
+func (event Event) Save(){
+  //later add to database
+	events = append(events, event)
+}
 func GetAllEvents() string {
 	events := fetchEvents()
 	json, err := json.Marshal(events)
